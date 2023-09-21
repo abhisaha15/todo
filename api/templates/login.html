@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Login
+
+{% endblock title %}
+
+{% block body%}
+</body>
+<body class="bodycolor">
+<style>.bodycolor{
+
+<!--    background: #8E2DE2;  /* fallback for old browsers */-->
+<!--    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */-->
+<!--    background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */-->
+    background: #1e3c72;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}</style>
+
+    <div class="container mt-5">
+
+        <div class="row mt-5">
+
+            <div class="offset-2 col-md-8">
+                <div class="card mb-3">
+                    <div class="row g-0"  style="padding: 2px;">
+                      <div class="col-md-6">
+                        <img src="{{ url_for('static', filename='img/login.gif') }}" class="img-fluid rounded-start" alt="imgofurlshortner">
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-body mt-3">
+                            <form method="post" action="/login" id="login-form">
+                                <h3 class="form-text text-danger">{{mesg}}</h3>
+                                <div class="mb-3">
+                                  <label for="useremail" class="form-label">Email address</label>
+                                  <input type="email" class="form-control" name="uemail" id="useremail" aria-describedby="emailHelp">
+                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="upass" class="form-label">Password</label>
+                                  <input type="password" name="upassword" class="form-control" id="upass">
+                                </div>
+                                <div class="mb-3 form-check">
+                                  <input type="checkbox" class="form-check-input" id="uloggedin"  onchange="jakhusitai(this)">
+                                  <label class="form-check-label" for="uloggedin">keep me logged in</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                                <h3 class="form-text">Don't have an account ?<a href="{{ url_for('signup')}}">here</a>.</h3>
+                                <h3 class="form-text"><a href="{{ url_for('forget_password')}}">Forgot Password</a>.</h3>
+
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <footer class="footer mt-auto py-3">
+      <div class="container text-center">
+          <span class="text-light">Designed and Developed by: <a href="https://github.com/abhisaha15" target="_blank">Abhishek
+                  Saha</a></span>
+      </div>
+</footer>
+<style>
+
+.footer a{
+text-decoration: none;
+color: #fff;
+
+}
+</style>
+<script>
+    function jakhusitai(checkbox){
+
+    let unm = document.querySelector('#useremail').value;
+    let upass = document.querySelector('#upass').value;
+    if(checkbox.checked == true){
+             $.ajax('/validuserdata', {
+                type: 'POST',
+                dataType: "json",
+                data: { useremail: unm,
+                        userpassword:upass},
+                success: function (data, status, xhr) {
+                    console.log(data)
+                    if(data==1){
+
+                     localStorage.setItem("useremail", unm);
+                     localStorage.setItem("userpassword", upass);
+
+                    }
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+
+                }
+
+             });
+
+    }
+
+
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function(){
+
+        let unm = localStorage.getItem("useremail");
+        let upass = localStorage.getItem("userpassword");
+        console.log(unm,upass)
+
+
+        if((!unm) && (!upass)){
+
+        }else{
+
+            document.querySelector('#useremail').value = unm;
+            document.querySelector('#upass').value = upass;
+            document.querySelector("#login-form").submit();
+
+
+
+        }
+
+
+
+        }, true);
+</script>
+{% endblock body %}

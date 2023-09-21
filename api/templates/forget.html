@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Forget password
+
+{% endblock title %}
+
+{% block body %}
+</body>
+<body class="bodycolor">
+<style>.bodycolor{
+
+<!--    background: #8E2DE2;  /* fallback for old browsers */-->
+<!--    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */-->
+<!--    background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */-->
+    background: #1e3c72;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}</style>
+    <div class="container mt-5">
+
+        <div class="row mt-5">
+
+            <div class="offset-2 col-md-8">
+                <div class="card mb-3">
+                    <div class="row g-0"  style="padding: 2px;">
+                      <div class="col-md-6" >
+                        <img src="{{ url_for('static', filename='img/forgot_password1.gif') }}" class="img-fluid rounded-start" alt="imgofurlshortner">
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-body mt-3">
+                            <form class="row g-3" method="post" action="/forgetpassword">
+                                <h3 class="form-text text-danger">{{mesg}}</h3>
+
+                                <div class="col-md-12">
+                                  <label for="dob" class="form-label">DOB</label>
+                                  <input name="dob" type="date" class="form-control" id="dob">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="umail" id="inputEmail">
+                                </div>
+                                <div class="col-12">
+                                    <label for="inputPassword4" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" name="upass" id="inputPassword4">
+                                </div>
+                                <div class="col-12">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                              </form>
+
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock body %}

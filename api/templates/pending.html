@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}
+  My Pending Todo's
+{% endblock title %}
+    
+{% block body %}
+    <nav class="navbar navbar-expand-lg navcolor">
+        <div class="container-fluid">
+          <a class="navbar-brand text-light" href="{{url_for('home')}}">To-Do List</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{uemail}}
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" style="font-size:0.8rem;" href="{{url_for('logout')}}" onclick="logoutlocal()">Logout</a></li>
+                        <li><a class="dropdown-item" style="font-size:0.8rem;" href="{{url_for('forget_password')}}">Change <br> Password</a></li>
+                    </ul>
+                  </li>
+
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <style>
+        .navcolor{
+
+  background: #7474BF;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+    </style>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a class="btn btn-outline-success btn-md mx-2" href="/" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>  Back To Home Page</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <h2>Your Pending ToDo's</h2>
+      
+      
+      <div class="col-md-8"></div>
+      <div class="col-md-1">
+
+      </div>
+      <div class="col-md-3">
+
+      </div>
+  
+    </div>
+    <br>
+    {% if allTodo|length==0 %}
+      <div class="alert alert-warning" role="alert">
+        No Records Found. Add some now !!!!!
+      </div>
+    {% else %}
+      <div class="row mt-3">
+        <div id="myGrid" style="height: 25rem;" class="ag-theme-alpine"></div>
+      </div>
+    {% endif %}
+</div>
+<script>
+  
+  var columnDefs = [
+    {headerName: "Serial No", field: "sno",hide:true},
+    {headerName: "Title", field: "title",checkboxSelection: true},
+    {headerName: "Description", field: "desc"},
+    {headerName: "Label", field: "differ"},
+    {headerName: "Status", field: "status",hide:true},
+    {headerName: "Created Time", field: "date_created"},
+    {headerName: "Deadline", field: "date_deadline"},
+  ];
+
+  // specify the data
+  var rowData = {{allTodo|tojson}}
+  console.log(rowData)
+
+  // let the grid know which columns and what data to use
+  var gridOptions = {
+    defaultColDef: {
+        resizable: true,
+    },
+    suppressDragLeaveHidesColumns: true,
+    columnDefs: columnDefs,
+    onFirstDataRendered: onFirstDataRendered,
+
+    rowData: rowData
+  };
+  function onFirstDataRendered(params) {
+    params.api.sizeColumnsToFit();
+  }
+
+
+  // setup the grid after the page has finished loading
+  document.addEventListener('DOMContentLoaded', function() {
+      var gridDiv = document.querySelector('#myGrid');
+      new agGrid.Grid(gridDiv, gridOptions);
+  });
+
+  
+
+
+</script>
+{% endblock body %}
